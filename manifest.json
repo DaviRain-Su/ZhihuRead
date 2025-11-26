@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Zhihu Pure Reader",
+  "version": "1.0",
+  "description": "Make Zhihu readable again. Hides clutter and improves typography.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*.zhihu.com/*"],
+      "css": ["styles.css"],
+      "js": ["content.js"]
+    }
+  ]
+}

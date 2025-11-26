@@ -1,0 +1,123 @@
+/* 
+   Zhihu Pure Reader - Pro Customizable Version
+*/
+
+/* 1. CSS Variables (Default Values) */
+:root {
+    --bg-color: #fdf6e3;
+    --text-color: #2c3e50;
+    --heading-color: #111;
+    --font-stack: "Georgia", "Source Han Serif SC", serif;
+    --font-size: 20px;     /* Default, controlled by JS */
+    --content-width: 900px; /* Default, controlled by JS */
+    --line-height: 1.8;
+}
+
+/* Theme Definitions */
+body[data-theme="warm"] { --bg-color: #fdf6e3; --text-color: #2c3e50; --heading-color: #111; }
+body[data-theme="dark"] { --bg-color: #1a1a1a; --text-color: #b0b0b0; --heading-color: #ddd; }
+body[data-theme="white"] { --bg-color: #ffffff; --text-color: #222; --heading-color: #000; }
+body[data-theme="sepia"] { --bg-color: #f4ecd8; --text-color: #5b4636; --heading-color: #433422; }
+
+/* Font Definitions */
+body[data-font="serif"] { --font-stack: "Georgia", "Source Han Serif SC", "Noto Serif CJK SC", serif; }
+body[data-font="sans"] { --font-stack: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+/* Only apply in Reader Mode */
+.pure-reader-mode {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hide Distractions */
+.pure-reader-mode .AppHeader, 
+.pure-reader-mode .CornerButtons,
+.pure-reader-mode .GlobalSideBar,
+.pure-reader-mode .Question-sideColumn,
+.pure-reader-mode .TopstorySideBar,
+.pure-reader-mode .ContentItem-actions,
+.pure-reader-mode .ZVideo-mobileLink,
+.pure-reader-mode .Ad,
+.pure-reader-mode .Pc-card,
+.pure-reader-mode .MoreAnswers,
+.pure-reader-mode .Reward,
+.pure-reader-mode .FollowButton {
+    display: none !important;
+}
+
+/* Layout: Dynamic Width */
+.pure-reader-mode .Question-main, 
+.pure-reader-mode .Topstory-main,
+.pure-reader-mode .Post-Main {
+    width: var(--content-width) !important; /* Controlled by Slider */
+    max-width: 95vw !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    float: none !important;
+    display: block !important;
+}
+
+.pure-reader-mode .Question-mainColumn, 
+.pure-reader-mode .Topstory-mainColumn {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Container Backgrounds */
+.pure-reader-mode .Card,
+.pure-reader-mode .ContentItem,
+.pure-reader-mode .AnswerItem {
+    box-shadow: none !important;
+    border: none !important;
+    background: var(--bg-color) !important;
+}
+
+/* Typography - Apply variables */
+.pure-reader-mode .RichContent-inner, 
+.pure-reader-mode .RichContent,
+.pure-reader-mode .Post-RichText,
+.pure-reader-mode p {
+    font-family: var(--font-stack) !important;
+    font-size: var(--font-size) !important;
+    line-height: var(--line-height) !important;
+    color: var(--text-color) !important;
+    text-align: justify !important;
+}
+
+/* Headings */
+.pure-reader-mode h1, 
+.pure-reader-mode h2, 
+.pure-reader-mode h3,
+.pure-reader-mode .QuestionHeader-title,
+.pure-reader-mode .Post-Title {
+    font-family: "Helvetica Neue", Arial, sans-serif !important;
+    margin-top: 1.5em !important;
+    color: var(--heading-color) !important;
+}
+
+/* Images */
+.pure-reader-mode img {
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 20px auto !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Header Area */
+.pure-reader-mode .QuestionHeader-title {
+    font-size: 32px !important;
+    text-align: center !important;
+    margin-bottom: 30px !important;
+}
+
+.pure-reader-mode .QuestionHeader {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-top: 40px !important;
+}
+
+.pure-reader-mode .QuestionHeader-content {
+    width: 100% !important;
+    padding: 0 !important;
+}

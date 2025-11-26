@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 260px; padding: 15px; font-family: "Helvetica Neue", sans-serif; color: #333; }
+    h3 { margin-top: 0; margin-bottom: 15px; font-size: 16px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    
+    .control-group { margin-bottom: 15px; }
+    .control-label { font-size: 12px; color: #666; margin-bottom: 5px; display: block; font-weight: bold; }
+    
+    /* Theme Grid */
+    .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .theme-btn { 
+      padding: 8px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-size: 13px; text-align: center; background: #f9f9f9; transition: all 0.2s;
+    }
+    .theme-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .theme-btn.active { border-color: #0084ff; color: #0084ff; font-weight: bold; background: #eef6ff; }
+
+    /* Font Toggle */
+    .font-toggle { display: flex; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+    .font-btn { flex: 1; border: none; background: #f9f9f9; padding: 8px; cursor: pointer; font-size: 13px; }
+    .font-btn:first-child { border-right: 1px solid #ddd; }
+    .font-btn.active { background: #0084ff; color: white; }
+    .font-serif { font-family: "Georgia", serif; }
+    .font-sans { font-family: "Helvetica Neue", sans-serif; }
+
+    /* Sliders */
+    input[type=range] { width: 100%; margin: 5px 0; }
+    .range-labels { display: flex; justify-content: space-between; font-size: 10px; color: #999; }
+
+    .footer { margin-top: 20px; font-size: 10px; color: #ccc; text-align: center; }
+  </style>
+</head>
+<body>
+  <h3>Zhihu Pure Reader Pro</h3>
+
+  <!-- 1. Theme Selection -->
+  <div class="control-group">
+    <label class="control-label">阅读主题</label>
+    <div class="theme-grid">
+      <div class="theme-btn" id="warm" data-val="warm">🌞 暖色</div>
+      <div class="theme-btn" id="white" data-val="white">📄 纯白</div>
+      <div class="theme-btn" id="dark" data-val="dark">🌙 夜间</div>
+      <div class="theme-btn" id="sepia" data-val="sepia">📖 羊皮</div>
+    </div>
+  </div>
+
+  <!-- 2. Font Family -->
+  <div class="control-group">
+    <label class="control-label">字体风格</label>
+    <div class="font-toggle">
+      <button class="font-btn font-serif active" id="font-serif" data-val="serif">衬线 (Serif)</button>
+      <button class="font-btn font-sans" id="font-sans" data-val="sans">无衬线 (Sans)</button>
+    </div>
+  </div>
+
+  <!-- 3. Font Size -->
+  <div class="control-group">
+    <label class="control-label">字号大小</label>
+    <input type="range" id="fontSize" min="14" max="28" value="20" step="1">
+    <div class="range-labels"><span>A</span><span>A+</span></div>
+  </div>
+
+  <!-- 4. Page Width -->
+  <div class="control-group">
+    <label class="control-label">页面宽度</label>
+    <input type="range" id="pageWidth" min="600" max="1200" value="900" step="50">
+    <div class="range-labels"><span>窄</span><span>宽</span></div>
+  </div>
+
+  <div class="footer">v2.0 Pro Edition</div>
+  <script src="popup.js"></script>
+</body>
+</html>
