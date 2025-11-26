@@ -75,17 +75,17 @@ function saveAndBroadcast() {
 
     chrome.storage.local.set({ 'zhihu_settings': currentSettings });
 
-    console.log('Settings saved:', currentSettings);
-
 
 
     // 2. Broadcast to Active Tab
 
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
-        if (tabs[0] && tabs[0].id) {
+        // Check if tab exists and is a valid web page (not chrome://)
 
-            console.log('Sending message to tab:', tabs[0].id);
+        if (tabs[0] && tabs[0].id && tabs[0].url && tabs[0].url.startsWith('http')) {
+
+            
 
             chrome.tabs.sendMessage(tabs[0].id, { 
 
@@ -95,20 +95,60 @@ function saveAndBroadcast() {
 
             }, (response) => {
 
+                const statusDiv = document.getElementById('status-msg');
+
+                
+
                 if (chrome.runtime.lastError) {
 
-                    console.error("Message failed:", chrome.runtime.lastError.message);
+                    // Error Handling: Usually means content script is missing or orphaned
+
+                    console.log("Connection failed, asking user to refresh.");
+
+                    if (statusDiv) {
+
+                        statusDiv.innerText = "⚠️ 请刷新知乎页面以生效";
+
+                        statusDiv.style.color = "red";
+
+                        statusDiv.style.display = "block";
+
+                    }
 
                 } else {
 
-                    console.log("Message sent successfully");
+                    // Success
+
+                    if (statusDiv) {
+
+                        statusDiv.style.display = "none"; // Hide error if success
+
+                    }
 
                 }
 
             });
+
+        } else {
+
+            // If not on a valid page (e.g. New Tab page)
+
+            const statusDiv = document.getElementById('status-msg');
+
+            if (statusDiv) {
+
+                statusDiv.innerText = "❌ 仅在知乎页面可用";
+
+                statusDiv.style.color = "#999";
+
+                statusDiv.style.display = "block";
+
+            }
 
         }
 
     });
 
 }
+
+
