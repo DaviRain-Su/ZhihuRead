@@ -23,15 +23,28 @@ body[data-theme="sepia"] { --bg-color: #f4ecd8; --text-color: #5b4636; --heading
 body[data-font="serif"] { --font-stack: "Georgia", "Source Han Serif SC", "Noto Serif CJK SC", serif; }
 body[data-font="sans"] { --font-stack: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif; }
 
+
+/* === ROOT LEVEL BACKGROUND FIX === */
+/* Force background color on the very root elements to prevent white strips */
+html, 
+.pure-reader-mode,
+.pure-reader-mode body,
+.pure-reader-mode .Post-Page, /* Critical for Column pages */
+.pure-reader-mode .Post-NormalMain,
+.pure-reader-mode .Post-Main {
+    background-color: var(--bg-color) !important;
+    min-height: 100vh !important;
+}
+
 /* Only apply in Reader Mode */
 .pure-reader-mode {
-    background-color: var(--bg-color) !important;
     color: var(--text-color) !important;
     transition: background-color 0.3s, color 0.3s;
 }
 
 /* Hide Distractions */
 .pure-reader-mode .AppHeader, 
+.pure-reader-mode .ColumnPageHeader, /* Column Header */
 .pure-reader-mode .CornerButtons,
 .pure-reader-mode .GlobalSideBar,
 .pure-reader-mode .Question-sideColumn,
@@ -42,9 +55,22 @@ body[data-font="sans"] { --font-stack: "Helvetica Neue", "PingFang SC", "Microso
 .pure-reader-mode .Pc-card,
 .pure-reader-mode .MoreAnswers,
 .pure-reader-mode .Reward,
-.pure-reader-mode .FollowButton {
+.pure-reader-mode .FollowButton,
+.pure-reader-mode .Post-SideActions, 
+.pure-reader-mode .Post-Sub, 
+.pure-reader-mode .Post-NormalSub,
+.pure-reader-mode .Sticky,
+.pure-reader-mode .Catalog, 
+.pure-reader-mode .Post-Writer, 
+.pure-reader-mode .AuthorInfo,
+.pure-reader-mode .UserCard,
+.pure-reader-mode .Post-Side, /* The entire sidebar container */
+.pure-reader-mode .Post-SideColumn,
+.pure-reader-mode div[role="complementary"] /* Accessibility role often used for sidebars */
+{
     display: none !important;
 }
+
 
 /* Layout: Dynamic Width */
 .pure-reader-mode .Question-main, 
@@ -67,7 +93,9 @@ body[data-font="sans"] { --font-stack: "Helvetica Neue", "PingFang SC", "Microso
 /* Container Backgrounds */
 .pure-reader-mode .Card,
 .pure-reader-mode .ContentItem,
-.pure-reader-mode .AnswerItem {
+.pure-reader-mode .AnswerItem,
+.pure-reader-mode .Post-Main, /* Ensure Column Main bg is correct */
+.pure-reader-mode .Post-Content {
     box-shadow: none !important;
     border: none !important;
     background: var(--bg-color) !important;
@@ -83,6 +111,55 @@ body[data-font="sans"] { --font-stack: "Helvetica Neue", "PingFang SC", "Microso
     line-height: var(--line-height) !important;
     color: var(--text-color) !important;
     text-align: justify !important;
+}
+
+/* === Code Blocks Optimization === */
+.pure-reader-mode pre,
+.pure-reader-mode code,
+.pure-reader-mode .highlight,
+.pure-reader-mode .ztext-code {
+    font-family: "Fira Code", "Consolas", "Monaco", "Andale Mono", monospace !important;
+    font-size: 0.9em !important;
+    line-height: 1.6 !important;
+    background-color: rgba(0, 0, 0, 0.05) !important; /* Adaptive semi-transparent bg */
+    border-radius: 6px !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    overflow-x: auto !important; /* Allow horizontal scroll */
+    /* color: inherit !important;  <-- Removed to allow syntax highlighting */
+    white-space: pre !important;
+}
+
+.pure-reader-mode pre {
+    padding: 15px !important;
+    margin: 25px 0 !important;
+}
+
+/* Dark mode specifics for code */
+body[data-theme="dark"] .pure-reader-mode pre,
+body[data-theme="dark"] .pure-reader-mode code,
+body[data-theme="dark"] .pure-reader-mode .highlight {
+    background-color: rgba(255, 255, 255, 0.1) !important; 
+    border-color: rgba(255,255,255,0.1) !important;
+    /* Allow text color to be determined by syntax highlighter or fallback */
+}
+
+/* === Fix Residual White Backgrounds === */
+/* Force these containers to be transparent so the body theme color shows through */
+.pure-reader-mode .Post-RichTextContainer,
+.pure-reader-mode .RichContent-inner > div,
+.pure-reader-mode .ztext,
+.pure-reader-mode blockquote {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Blockquote Styling */
+.pure-reader-mode blockquote {
+    border-left: 4px solid var(--link-color) !important;
+    padding-left: 16px !important;
+    margin-left: 0 !important;
+    color: var(--text-color) !important;
+    opacity: 0.8;
 }
 
 /* Headings */

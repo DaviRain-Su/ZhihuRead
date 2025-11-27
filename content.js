@@ -3,7 +3,19 @@ console.log("Zhihu Pure Reader Pro (Customizable) activated.");
 
 // --- Settings Handling ---
 
+let isEnabled = true; // Global flag
+
 function applySettings(settings) {
+    if (settings.enabled !== undefined) {
+        isEnabled = settings.enabled;
+    }
+
+    // If disabled, force cleanup and exit
+    if (!isEnabled) {
+        document.body.classList.remove('pure-reader-mode');
+        return; // Stop applying other settings
+    }
+
     // 1. Theme
     if (settings.theme) {
         document.body.setAttribute('data-theme', settings.theme);
@@ -23,10 +35,14 @@ function applySettings(settings) {
     if (settings.pageWidth) {
         document.documentElement.style.setProperty('--content-width', settings.pageWidth + 'px');
     }
+    
+    // Re-check mode in case we just enabled it
+    checkAndApplyMode();
 }
 
 // Default Defaults
 const defaultSettings = {
+    enabled: true,
     theme: 'warm',
     fontFamily: 'serif',
     fontSize: 20,
@@ -57,6 +73,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // --- Mode Logic ---
 
 function checkAndApplyMode() {
+    // If master switch is off, do nothing (or exit mode)
+    if (!isEnabled) {
+        document.body.classList.remove('pure-reader-mode');
+        return;
+    }
+
     const path = window.location.pathname;
     // Check if we are on a "readable" page
     const isReadablePage = path.startsWith('/question/') || path.startsWith('/p/');
@@ -79,7 +101,19 @@ function cleanUp() {
         '.MCNLinkCard', 
         '.ZVideo-mobileLink',
         '.Reward', 
-        '.FollowButton'
+        '.FollowButton',
+        // Zhuanlan (Column) specific
+        '.ColumnPageHeader',
+        '.Post-SideActions',
+        '.Post-Sub',
+        '.Post-NormalSub',
+        '.Sticky',
+        '.Catalog',
+        '.Post-Writer',
+        '.AuthorInfo',
+        '.UserCard',
+        '.Post-Side',
+        '.Post-SideColumn'
     ];
 
     selectorsToRemove.forEach(selector => {

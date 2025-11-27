@@ -1,4 +1,5 @@
 const defaultSettings = {
+    enabled: true, // Master switch default
     theme: 'warm',
     fontFamily: 'serif',
     fontSize: 20,
@@ -18,6 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Bind UI Events
     
+    // Master Switch
+    const masterSwitch = document.getElementById('masterSwitch');
+    masterSwitch.addEventListener('change', (e) => {
+        currentSettings.enabled = e.target.checked;
+        saveAndBroadcast();
+        updateUI(currentSettings); // To potentially disable/dim other controls
+    });
+
     // Theme Buttons
     document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -52,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateUI(settings) {
+    // Update Master Switch
+    document.getElementById('masterSwitch').checked = settings.enabled;
+
     // Update Theme Buttons
     document.querySelectorAll('.theme-btn').forEach(btn => {
         if (btn.dataset.val === settings.theme) btn.classList.add('active');
